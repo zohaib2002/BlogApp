@@ -11,17 +11,17 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    // Axios.get("https://blog1api.herokuapp.com/posts").then((response) => {
-    //   if (response.status === 200) {
-    //     const postlist = response.data.map((post) => {
-    //       return new Post(post.title, post.author, post.content);
-    //     });
-    //     postlist.reverse();
-    //     this.setState({ postlist: postlist });
-    //   } else {
-    //     alert("Error loading posts! Status: " + response.status);
-    //   }
-    // });
+    Axios.get("https://blog1api.herokuapp.com/posts").then((response) => {
+      if (response.status === 200) {
+        const postlist = response.data.map((post) => {
+          return new Post(post.title, post.author, post.content);
+        });
+        postlist.reverse();
+        this.setState({ postlist: postlist });
+      } else {
+        alert("Error loading posts! Status: " + response.status);
+      }
+    });
   }
 
   handlePost = (post) => {
