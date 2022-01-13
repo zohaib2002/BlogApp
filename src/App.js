@@ -8,6 +8,7 @@ import Post from "./post.js";
 class App extends React.Component {
   state = {
     postlist: [],
+    isLoaded: false,
   };
 
   componentDidMount() {
@@ -17,7 +18,7 @@ class App extends React.Component {
           return new Post(post.title, post.author, post.content);
         });
         postlist.reverse();
-        this.setState({ postlist: postlist });
+        this.setState({ postlist: postlist, isLoaded: true });
       } else {
         alert("Error loading posts! Status: " + response.status);
       }
@@ -81,14 +82,23 @@ class App extends React.Component {
         <Navbar />
         <main className="container">
           <InputBar handlePost={this.handlePost} />
-          {this.state.postlist.length != 0 ? (
-            <PostList
-              postlist={this.state.postlist}
-              handleDelete={this.handleDelete}
-            />
+          {this.state.isLoaded ? (
+            this.state.postlist.length != 0 ? (
+              <PostList
+                postlist={this.state.postlist}
+                handleDelete={this.handleDelete}
+              />
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                <p>
+                  <br />
+                  There are no posts :(
+                </p>
+              </div>
+            )
           ) : (
-            <div style={{ textAlign: "center" }}>
-              <p>There are no posts :(</p>
+            <div style={{ textAlign: "center", marginTop: "40px" }}>
+              <div class="spinner-border text-info" role="status" />
             </div>
           )}
         </main>
